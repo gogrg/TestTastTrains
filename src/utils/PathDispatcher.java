@@ -32,9 +32,13 @@ public class PathDispatcher {
         //проход по всем путям
         for (List<TrainInPath> dataPath :  pathsMap.values()) {
             //проход по каждому проезду поезда на пути
+            nextIter:
             for (int i = 0; i < dataPath.size() - 1; i++) {
                 //сверка со следующими поездами
                 for (int j = i + 1; j < dataPath.size(); j++) {
+                    if (dataPath.get(i).getEndTime() < dataPath.get(j).getStartTime()) {
+                        continue nextIter;
+                    }
                     //Если поезда движутся по одному пути в разных направлениях - происходит авария
                     if (dataPath.get(i).getEndTime() > dataPath.get(j).getStartTime() &&
                         !dataPath.get(i).getDirection().equals(dataPath.get(j).getDirection())) {
@@ -43,9 +47,6 @@ public class PathDispatcher {
                         System.out.println("Временной промежуток: " + String.valueOf(dataPath.get(j).getStartTime()) + "-" + String.valueOf(dataPath.get(i).getEndTime()));
                         System.out.println();
                         amountAccident.incrementAndGet();
-                    }
-                    if (dataPath.get(i).getEndTime() < dataPath.get(j).getStartTime()) {
-                        continue;
                     }
                 }
             }
