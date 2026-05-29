@@ -44,6 +44,9 @@ public class PathDispatcher {
                         System.out.println();
                         amountAccident.incrementAndGet();
                     }
+                    if (dataPath.get(i).getEndTime() < dataPath.get(j).getStartTime()) {
+                        continue;
+                    }
                 }
             }
         }
